@@ -1,65 +1,196 @@
-import Image from "next/image";
+import Image from 'next/image'
+import Link from 'next/link'
+import { getAllInterviews } from '@/lib/sanity/queries'
+import { urlFor } from '@/lib/sanity/image'
+import type { Interview } from '@/lib/sanity/types'
 
-export default function Home() {
+function formatDate(dateString: string) {
+  return new Date(dateString).toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  })
+}
+
+function TagList({ tags }: { tags: string[] }) {
+  if (!tags?.length) return null
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+    <ul className="flex flex-wrap gap-2">
+      {tags.map((tag) => (
+        <li
+          key={tag}
+          className="px-2 py-0.5 text-xs font-semibold uppercase tracking-wider border border-stone-400 text-stone-600"
+        >
+          {tag}
+        </li>
+      ))}
+    </ul>
+  )
+}
+
+function FeaturedStory({ story }: { story: Interview }) {
+  return (
+    <Link
+      href={`/stories/${story.slug.current}`}
+      className="group block border-t-2 border-stone-900 pt-6"
+    >
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-2 md:gap-10">
+        {story.mainImage && (
+          <div className="relative aspect-[4/3] overflow-hidden bg-stone-200">
+            <Image
+              src={urlFor(story.mainImage).width(800).height(600).url()}
+              alt={story.mainImage.alt ?? story.intervieweeName}
+              fill
+              sizes="(max-width: 768px) 100vw, 50vw"
+              className="object-cover transition-transform duration-500 group-hover:scale-105"
+              priority
+            />
+          </div>
+        )}
+        <div className="flex flex-col justify-center gap-4">
+          <p className="text-xs font-semibold uppercase tracking-widest text-red-700">
+            Featured Story
+          </p>
+          <h2 className="text-3xl font-bold leading-tight text-stone-900 group-hover:underline underline-offset-4 md:text-4xl">
+            {story.title}
+          </h2>
+          <p className="text-base font-medium text-stone-600">
+            {story.intervieweeName}
+            {story.intervieweeOrigin && (
+              <span className="font-normal text-stone-500"> — {story.intervieweeOrigin}</span>
+            )}
+          </p>
+          {story.excerpt && (
+            <p className="text-stone-700 leading-relaxed line-clamp-4">{story.excerpt}</p>
+          )}
+          <TagList tags={story.tags} />
+          {story.publishedAt && (
+            <p className="text-sm text-stone-500">{formatDate(story.publishedAt)}</p>
+          )}
+        </div>
+      </div>
+    </Link>
+  )
+}
+
+function StoryCard({ story }: { story: Interview }) {
+  return (
+    <Link
+      href={`/stories/${story.slug.current}`}
+      className="group flex flex-col gap-3 border-t border-stone-300 pt-4"
+    >
+      {story.mainImage && (
+        <div className="relative aspect-[3/2] overflow-hidden bg-stone-200">
+          <Image
+            src={urlFor(story.mainImage).width(600).height(400).url()}
+            alt={story.mainImage.alt ?? story.intervieweeName}
+            fill
+            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+            className="object-cover transition-transform duration-500 group-hover:scale-105"
+          />
+        </div>
+      )}
+      <div className="flex flex-col gap-2">
+        <h3 className="text-lg font-bold text-stone-900 group-hover:underline underline-offset-2 leading-snug">
+          {story.title}
+        </h3>
+        <p className="text-sm font-medium text-stone-600">
+          {story.intervieweeName}
+          {story.intervieweeOrigin && (
+            <span className="font-normal text-stone-500"> — {story.intervieweeOrigin}</span>
+          )}
+        </p>
+        {story.excerpt && (
+          <p className="text-sm text-stone-600 leading-relaxed line-clamp-3">{story.excerpt}</p>
+        )}
+        <TagList tags={story.tags} />
+        {story.publishedAt && (
+          <p className="text-xs text-stone-400">{formatDate(story.publishedAt)}</p>
+        )}
+      </div>
+    </Link>
+  )
+}
+
+function EmptyState() {
+  return (
+    <div className="py-24 text-center border-t-2 border-stone-900">
+      <p className="text-stone-500 text-lg">No stories published yet.</p>
+      <p className="text-stone-400 text-sm mt-2">
+        Add interviews in the{' '}
+        <Link href="/studio" className="underline hover:text-stone-600">
+          Sanity Studio
+        </Link>
+        .
+      </p>
+    </div>
+  )
+}
+
+export default async function HomePage() {
+  const interviews = await getAllInterviews()
+  const [featured, ...rest] = interviews
+
+  return (
+    <div className="min-h-screen bg-stone-50">
+      {/* Masthead */}
+      <header className="bg-stone-900 text-stone-50 px-6 py-10 md:px-12 md:py-14">
+        <div className="max-w-5xl mx-auto">
+          <div className="flex flex-col gap-3 border-b border-stone-600 pb-8 mb-6">
+            <p className="text-xs font-semibold uppercase tracking-[0.3em] text-red-400">
+              An Interview Series
+            </p>
+            <h1 className="text-5xl font-bold tracking-tight md:text-7xl">
+              American Stories
+            </h1>
+          </div>
+          <p className="max-w-xl text-stone-300 leading-relaxed">
+            What does it mean to be American? We ask ordinary people to share their
+            extraordinary lives — stories of belonging, struggle, resilience, and hope
+            from every corner of this country.
           </p>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+      </header>
+
+      {/* Navigation */}
+      <nav className="bg-stone-900 border-t border-stone-700 px-6 md:px-12">
+        <div className="max-w-5xl mx-auto flex items-center gap-6 py-3 text-sm">
+          <Link href="/" className="text-stone-50 font-semibold hover:text-red-400 transition-colors">
+            All Stories
+          </Link>
+          <Link href="/studio" className="text-stone-400 hover:text-stone-200 transition-colors">
+            Studio
+          </Link>
         </div>
+      </nav>
+
+      {/* Content */}
+      <main className="max-w-5xl mx-auto px-6 py-12 md:px-12 md:py-16">
+        {!interviews.length ? (
+          <EmptyState />
+        ) : (
+          <div className="flex flex-col gap-16">
+            {featured && <FeaturedStory story={featured} />}
+
+            {rest.length > 0 && (
+              <section>
+                <h2 className="text-xs font-semibold uppercase tracking-widest text-stone-500 mb-8 border-t-2 border-stone-900 pt-6">
+                  More Stories
+                </h2>
+                <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-3">
+                  {rest.map((story) => (
+                    <StoryCard key={story._id} story={story} />
+                  ))}
+                </div>
+              </section>
+            )}
+          </div>
+        )}
       </main>
+
+      <footer className="border-t border-stone-200 px-6 py-8 md:px-12 text-center text-xs text-stone-400">
+        © {new Date().getFullYear()} American Stories
+      </footer>
     </div>
-  );
+  )
 }
