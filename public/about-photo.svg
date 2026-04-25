@@ -2,38 +2,38 @@
   <!-- Background circle -->
   <circle cx="100" cy="100" r="100" fill="#dbeafe"/>
 
-  <!-- Ears -->
-  <polygon points="45,75 60,30 80,70" fill="#93c5fd"/>
-  <polygon points="120,70 140,30 155,75" fill="#93c5fd"/>
-  <!-- Inner ears -->
-  <polygon points="50,70 61,42 74,68" fill="#fbcfe8"/>
-  <polygon points="126,68 139,42 150,70" fill="#fbcfe8"/>
+  <!-- Tail feathers -->
+  <path d="M158,118 Q178,108 174,128 Q168,120 158,130 Z" fill="#f59e0b"/>
+
+  <!-- Body -->
+  <ellipse cx="112" cy="128" rx="52" ry="40" fill="#fcd34d"/>
+
+  <!-- Wing -->
+  <path d="M88,118 Q120,110 138,128 Q120,140 92,138 Q85,128 88,118 Z" fill="#f59e0b" opacity="0.85"/>
+  <path d="M105,123 Q120,121 130,128" stroke="#d97706" stroke-width="1" fill="none" opacity="0.6"/>
+  <path d="M100,128 Q118,127 130,133" stroke="#d97706" stroke-width="1" fill="none" opacity="0.6"/>
+
+  <!-- Neck -->
+  <ellipse cx="78" cy="100" rx="18" ry="22" fill="#fcd34d"/>
 
   <!-- Head -->
-  <ellipse cx="100" cy="115" rx="58" ry="52" fill="#bfdbfe"/>
+  <circle cx="68" cy="78" r="32" fill="#fcd34d"/>
 
-  <!-- Eyes -->
-  <ellipse cx="80" cy="105" rx="10" ry="11" fill="white"/>
-  <ellipse cx="120" cy="105" rx="10" ry="11" fill="white"/>
-  <ellipse cx="80" cy="107" rx="6" ry="7" fill="#1e3a8a"/>
-  <ellipse cx="120" cy="107" rx="6" ry="7" fill="#1e3a8a"/>
-  <!-- Pupils shine -->
-  <circle cx="83" cy="104" r="2" fill="white"/>
-  <circle cx="123" cy="104" r="2" fill="white"/>
+  <!-- Cheek blush -->
+  <ellipse cx="58" cy="86" rx="6" ry="4" fill="#fbcfe8" opacity="0.6"/>
 
-  <!-- Nose -->
-  <polygon points="100,120 95,127 105,127" fill="#f9a8d4"/>
+  <!-- Beak (upper) -->
+  <path d="M50,80 Q28,80 30,90 Q42,87 52,86 Z" fill="#fb923c"/>
+  <!-- Beak (lower) -->
+  <path d="M50,86 Q34,90 32,94 Q44,94 52,90 Z" fill="#ea580c"/>
 
-  <!-- Mouth -->
-  <path d="M95,127 Q100,133 105,127" stroke="#1e40af" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+  <!-- Eye -->
+  <circle cx="64" cy="70" r="6" fill="white"/>
+  <circle cx="64" cy="71" r="4" fill="#1e3a8a"/>
+  <circle cx="65.5" cy="69.5" r="1.5" fill="white"/>
 
-  <!-- Whiskers left -->
-  <line x1="42" y1="118" x2="88" y2="122" stroke="#1e40af" stroke-width="1.2" stroke-linecap="round" opacity="0.5"/>
-  <line x1="42" y1="126" x2="88" y2="126" stroke="#1e40af" stroke-width="1.2" stroke-linecap="round" opacity="0.5"/>
-  <line x1="42" y1="134" x2="88" y2="130" stroke="#1e40af" stroke-width="1.2" stroke-linecap="round" opacity="0.5"/>
-
-  <!-- Whiskers right -->
-  <line x1="112" y1="122" x2="158" y2="118" stroke="#1e40af" stroke-width="1.2" stroke-linecap="round" opacity="0.5"/>
-  <line x1="112" y1="126" x2="158" y2="126" stroke="#1e40af" stroke-width="1.2" stroke-linecap="round" opacity="0.5"/>
-  <line x1="112" y1="130" x2="158" y2="134" stroke="#1e40af" stroke-width="1.2" stroke-linecap="round" opacity="0.5"/>
+  <!-- Water ripples -->
+  <ellipse cx="55" cy="178" rx="18" ry="2.5" fill="none" stroke="#60a5fa" stroke-width="2" opacity="0.5"/>
+  <ellipse cx="135" cy="180" rx="22" ry="2.5" fill="none" stroke="#60a5fa" stroke-width="2" opacity="0.5"/>
+  <ellipse cx="100" cy="186" rx="14" ry="2" fill="none" stroke="#60a5fa" stroke-width="1.5" opacity="0.4"/>
 </svg>
