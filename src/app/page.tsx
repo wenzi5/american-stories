@@ -225,23 +225,12 @@ export default async function HomePage() {
           </p>
           <div className="flex flex-col gap-4 text-blue-100 leading-relaxed">
             <p>
-              American Stories is created by a high school student who grew up watching people talk
-              past each other — in classrooms, in courtrooms, on screens — and who believes the most
-              powerful antidote to that is a story told honestly. As a volunteer in her county&apos;s
-              teen court and a member of her school&apos;s debate team, she has seen firsthand how
-              understanding someone&apos;s experience is the first step toward fairness.
-            </p>
-            <p>
-              She started this series because she wanted her generation to meet the America that
-              doesn&apos;t make the headlines: the immigrants who rebuilt their lives from scratch,
-              the workers who hold communities together, the young people navigating a country that
-              doesn&apos;t always see them. In a time of deep political division and persistent
-              inequality, she believes that stories — real ones, from real people — are how empathy
-              gets built and how small, stubborn change begins.
-            </p>
-            <p>
-              This project is for anyone who refuses to give up on the idea that America can be
-              better, fairer, and more honest about who it is and who it belongs to.
+              American Stories is an interview series about the people whose lives quietly shape
+              this country — the immigrants rebuilding from scratch, the workers holding communities
+              together, the neighbors navigating an America that doesn&apos;t always see them. In a
+              time of deep political division and persistent inequality, this project believes that
+              real stories, told honestly, are how empathy gets built and how small, stubborn change
+              begins.
             </p>
           </div>
           </div>
